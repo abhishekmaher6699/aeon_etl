@@ -5,14 +5,6 @@ import asyncio
 from bs4 import BeautifulSoup
 from tqdm.asyncio import tqdm
 import random
-# import logging
-
-# logging.basicConfig(
-#     level=logging.INFO, 
-#     format='%(asctime)s - %(levelname)s: %(message)s',
-#     datefmt='%Y-%m-%d %H:%M:%S'
-# )
-# logger = logging.getLogger(__name__)
 
 base_url = "https://aeon.co"
 MAX_RETRIES = 5 
@@ -32,8 +24,8 @@ async def scrape_data(session, url, retries=MAX_RETRIES):
                     title = title.text if title else "Title not found"
                     date = soup.find(class_="sc-2f963901-17 kSvvwV").select('div')[1].text if soup.find(class_="sc-2f963901-17 kSvvwV") else "Date not found"
                     tags = [a.text for a in soup.find(class_="sc-2f963901-13 ezPZgh").select('a')] if soup.find(class_="sc-2f963901-13 ezPZgh") else []
-
-                    return {"url": url, "title": title, "content": content, "tags": tags, "date": date}
+                    image = soup.find('img')['src']
+                    return {"url": url, "title": title, "content": content, "tags": tags, "date": date, 'image': image}
                 else:
                     print(f"Failed to retrieve {url} (Status: {response.status})")
                     return {"url": url, "title": f"Failed to retrieve (Status: {response.status})"}
@@ -61,7 +53,7 @@ async def scrape_all_links(csv_file):
         tasks = []
         for link in links:
             url = base_url + link if link.startswith('/') else link
-            print(f"Scraping URL: {url}")
+            # print(f"Scraping URL: {url}")
             tasks.append(scrape_data(session, url))
         
         results = []
@@ -86,5 +78,3 @@ async def scrape_articles():
 
 if __name__ == '__main__':
     asyncio.run(scrape_articles())
-
-# scrape_articles()

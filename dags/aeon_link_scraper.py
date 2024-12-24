@@ -78,9 +78,6 @@ def scrape_initial_links():
 
         print(f"Final total articles found: {len(all_articles)}")
 
-        # if not os.path.exists('artifacts'):
-        #     os.makedirs('artifacts')
-        
         essays = [link for link in all_articles if 'essay' in link]
         pd.DataFrame(essays, columns=['Links']).to_csv('links.csv', index=False)
 

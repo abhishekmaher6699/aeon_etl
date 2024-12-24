@@ -3,20 +3,10 @@ from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 import asyncio
-import json
-import os
-# import logging
 
 from aeon_link_scraper import scrape_initial_links, scrape_new_links
 from aeon_articles_scraper import scrape_articles
 from database_operations import load_data, is_database_empty
-
-# logging.basicConfig(
-#     level=print, 
-#     format='%(asctime)s - %(levelname)s: %(message)s',
-#     datefmt='%Y-%m-%d %H:%M:%S'
-# )
-# logger = logging.getLogger(__name__)
 
 def extract_links():
 
@@ -27,7 +17,7 @@ def extract_links():
             return
         
         if is_empty:
-            print("Database is empty. Scraping all links")
+            print("Database with images is empty. Scraping all links")
             scrape_initial_links()
         else:
             print("Database is not empty. Scraping new links")
