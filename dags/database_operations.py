@@ -62,6 +62,7 @@ def create_table(cursor):
                 tags TEXT[],
                 date TIMESTAMP,
                 image TEXT,
+                headline TEXT,
                 inserted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
@@ -108,7 +109,7 @@ def prepare_data(df):
         print(f"Removed {removed_rows} rows with 'content not found'")
     
     return [
-        (row['url'], row['title'], row['content'], row['tags'], row['date'], row['image']) 
+        (row['url'], row['title'], row['content'], row['tags'], row['date'], row['image'], row['headline']) 
         for _, row in filtered_df.iterrows()
     ]
 
@@ -130,8 +131,8 @@ def insert(df, cursor, conn, batch_size: int = 250):
                     execute_batch(
                         cursor,
                         sql.SQL("""
-                            INSERT INTO articles (url, title, content, tags, date, image)
-                            VALUES (%s, %s, %s, %s, %s, %s)
+                            INSERT INTO articles (url, title, content, tags, date, image, headline)
+                            VALUES (%s, %s, %s, %s, %s, %s, %s)
                             ON CONFLICT (url) DO NOTHING
                         """),
                         batch,

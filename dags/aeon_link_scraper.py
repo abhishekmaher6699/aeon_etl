@@ -14,7 +14,7 @@ from database_operations import start_connection, close_connection, url_exists_i
 
 def setup_driver():
 
-    selenium_url = "http://selenium:4444/wd/hub"
+    selenium_url = "http://localhost:4444/wd/hub"
 
     options = Options()
     options.add_argument(

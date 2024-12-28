@@ -22,10 +22,11 @@ async def scrape_data(session, url, retries=MAX_RETRIES):
                     content = ''.join([para.text for para in soup.find(id="article-content").find_all("p")]) if soup.find(id="article-content") else "Content not found"
                     title = soup.find(class_="mt-2.5 mb-6 font-semibold font-serif text-7xl leading-none max-[767px]:text-left max-[767px]:text-black max-[960px]:text-[42px] min-[768px]:mt-11 print:text-4xl")
                     title = title.text if title else "Title not found"
+                    headline = soup.find(class_="sc-d0d42ecb-4 bXNXzL").text if soup.find(class_="sc-d0d42ecb-4 bXNXzL") else "Headline not found"
                     date = soup.find(class_="sc-2f963901-17 kSvvwV").select('div')[1].text if soup.find(class_="sc-2f963901-17 kSvvwV") else "Date not found"
                     tags = [a.text for a in soup.find(class_="sc-2f963901-13 ezPZgh").select('a')] if soup.find(class_="sc-2f963901-13 ezPZgh") else []
                     image = soup.find('img')['src']
-                    return {"url": url, "title": title, "content": content, "tags": tags, "date": date, 'image': image}
+                    return {"url": url, "title": title, "content": content, "tags": tags, "date": date, 'image': image, "headline": headline}
                 else:
                     print(f"Failed to retrieve {url} (Status: {response.status})")
                     return {"url": url, "title": f"Failed to retrieve (Status: {response.status})"}

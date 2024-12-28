@@ -17,7 +17,7 @@ def extract_links():
             return
         
         if is_empty:
-            print("Database with images is empty. Scraping all links")
+            print("Database with headline is empty. Scraping all links")
             scrape_initial_links()
         else:
             print("Database is not empty. Scraping new links")
