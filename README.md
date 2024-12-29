@@ -36,11 +36,12 @@ The ETL (Extract, Transform, Load) pipeline is orchestrated using **Apache Airfl
   - The notification is sent to a **Python script** responsible for triggering the **CI/CD pipeline** to build or update the backend of the application.
 
 ---
-### Future Enhancements
+## Future Enhancements
 
 - **Cloud Deployment:** The pipeline can be deployed on a cloud platform to automate the process at regular intervals without any manual interventions.
-- **Multiple Site Support:** Right now, we are only scraping articles from AEON, however we can also fetch articles from other websites with more modifications. I will leave that for the future me.
-- 
+- **Multiple Site Support:** Right now, we are only scraping articles from AEON, however we can also fetch articles from other websites with more modifications. I will leave that to the future me.
+
+  
 ---
 ## Technical Stack
 ### Tools and Technologies
